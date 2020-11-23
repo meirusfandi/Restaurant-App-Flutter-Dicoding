@@ -10,12 +10,12 @@ class ApiServices {
 
   Future<RestaurantsResult> getListRestaurant() async {
     final response = await http.get(_apiKey+"list");
-    print(_apiKey+"list");
-    print("response body result : ${response.body}");
-
     if (response.statusCode == 200) {
-      print("response success");
-      return RestaurantsResult.fromJson(json.decode(response.body));
+      Map json = jsonDecode(response.body);
+
+      print("json value ${json}");
+      RestaurantsResult result = RestaurantsResult.fromJson(json);
+      return result;
     } else {
       throw Exception("Failed to load restaurants");
     }
