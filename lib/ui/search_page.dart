@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/data/api/api_services.dart';
 import 'package:restaurant_app/data/model/restaurants.dart';
 import 'package:restaurant_app/widgets/no_data.dart';
 
 class SearchPage extends StatefulWidget {
   static const routeName = "/search_page";
-  final List<Restaurants> restaurants;
-
-  SearchPage({@required this.restaurants});
 
   @override
   _SearchPageState createState() => _SearchPageState();
@@ -16,6 +12,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
 
   List<Restaurants> _searchData;
+  List<Restaurants> _restaurants;
   TextEditingController _searchRest = TextEditingController();
 
   _onSearchTextChanged(String txt) {
@@ -25,7 +22,7 @@ class _SearchPageState extends State<SearchPage> {
       return;
     }
 
-    widget.restaurants.forEach((rest) {
+    _restaurants.forEach((rest) {
       if (rest.name.toLowerCase().contains(txt)) {
         _searchData.add(rest);
       }
@@ -65,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
           Expanded(
             child: _searchData.length != 0 && _searchRest.text.isNotEmpty
             ? ListView()
-            : NoDataView(msg: "Find the restaurants."),
+            : NoDataView(msg: "Find the restaurants.", icons: Icons.search,),
           ),
         ],
       ),
